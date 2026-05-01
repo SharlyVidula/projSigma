@@ -1,0 +1,226 @@
+<ProjectSpecification>
+    <ProjectName>PCBuilderPro</ProjectName>
+    <Summary>A web application for custom PC building and hardware compatibility checking, featuring a compatibility engine and real-time wattage calculator.</Summary>
+    <UserRoles>
+        <UserRole>
+            <RoleName>Admin</RoleName>
+            <RoleDescription>Manages hardware inventory and updates.</RoleDescription>
+            <Permissions>
+                <Permission>Manage CPUs</Permission>
+                <Permission>Manage GPUs</Permission>
+                <Permission>Manage DDR5 RAM</Permission>
+                <Permission>Manage Power Supplies</Permission>
+            </Permissions>
+        </UserRole>
+        <UserRole>
+            <RoleName>User</RoleName>
+            <RoleDescription>Creates custom PC builds and checks hardware compatibility.</RoleDescription>
+            <Permissions>
+                <Permission>Access Builder Interface</Permission>
+                <Permission>View Hardware Inventory</Permission>
+            </Permissions>
+        </UserRole>
+    </UserRoles>
+    <FunctionalRequirements>
+        <FunctionalRequirement>
+            <RequirementName>Hardware Inventory Management</RequirementName>
+            <RequirementDescription>Admin can update and manage hardware inventory.</RequirementDescription>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Compatibility Engine</RequirementName>
+            <RequirementDescription>Ensures selected motherboard matches CPU socket.</RequirementDescription>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Real-time Wattage Calculator</RequirementName>
+            <RequirementDescription>Calculates total power draw of selected components and recommends suitable power supply.</RequirementDescription>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Secure Admin Dashboard</RequirementName>
+            <RequirementDescription>Provides a secure interface for Admin to manage hardware inventory.</RequirementDescription>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Step-by-Step Builder Interface</RequirementName>
+            <RequirementDescription>Guides User through the process of creating a custom PC build.</RequirementDescription>
+        </FunctionalRequirement>
+    </FunctionalRequirements>
+    <UIStructure>
+        <Page>
+            <PageName>Admin Dashboard</PageName>
+            <PageDescription>Secure interface for Admin to manage hardware inventory.</PageDescription>
+            <Components>
+                <Component>
+                    <ComponentName>Hardware Inventory Table</ComponentName>
+                    <ComponentDescription>Displays list of available hardware components.</ComponentDescription>
+                </Component>
+                <Component>
+                    <ComponentName>Update Hardware Form</ComponentName>
+                    <ComponentDescription>Allows Admin to update hardware inventory.</ComponentDescription>
+                </Component>
+            </Components>
+        </Page>
+        <Page>
+            <PageName>Builder Interface</PageName>
+            <PageDescription>Step-by-step interface for User to create custom PC build.</PageDescription>
+            <Components>
+                <Component>
+                    <ComponentName>CPU Selection</ComponentName>
+                    <ComponentDescription>Allows User to select CPU.</ComponentDescription>
+                </Component>
+                <Component>
+                    <ComponentName>Motherboard Selection</ComponentName>
+                    <ComponentDescription>Allows User to select motherboard, with compatibility check against selected CPU.</ComponentDescription>
+                </Component>
+                <Component>
+                    <ComponentName>GPU Selection</ComponentName>
+                    <ComponentDescription>Allows User to select GPU.</ComponentDescription>
+                </Component>
+                <Component>
+                    <ComponentName>RAM Selection</ComponentName>
+                    <ComponentDescription>Allows User to select DDR5 RAM.</ComponentDescription>
+                </Component>
+                <Component>
+                    <ComponentName>Power Supply Selection</ComponentName>
+                    <ComponentDescription>Allows User to select power supply, with recommendation based on total power draw.</ComponentDescription>
+                </Component>
+                <Component>
+                    <ComponentName>Build Summary</ComponentName>
+                    <ComponentDescription>Displays summary of selected components and total cost.</ComponentDescription>
+                </Component>
+            </Components>
+        </Page>
+    </UIStructure>
+    <DatabaseSchema>
+        <Entity>
+            <EntityName>CPUs</EntityName>
+            <EntityDescription>Table to store CPU information.</EntityDescription>
+            <Attributes>
+                <Attribute>
+                    <AttributeName>id</AttributeName>
+                    <AttributeType>integer</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>name</AttributeName>
+                    <AttributeType>string</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>socket</AttributeName>
+                    <AttributeType>string</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>powerDraw</AttributeName>
+                    <AttributeType>integer</AttributeType>
+                </Attribute>
+            </Attributes>
+        </Entity>
+        <Entity>
+            <EntityName>Motherboards</EntityName>
+            <EntityDescription>Table to store motherboard information.</EntityDescription>
+            <Attributes>
+                <Attribute>
+                    <AttributeName>id</AttributeName>
+                    <AttributeType>integer</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>name</AttributeName>
+                    <AttributeType>string</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>socket</AttributeName>
+                    <AttributeType>string</AttributeType>
+                </Attribute>
+            </Attributes>
+        </Entity>
+        <Entity>
+            <EntityName>GPUs</EntityName>
+            <EntityDescription>Table to store GPU information.</EntityDescription>
+            <Attributes>
+                <Attribute>
+                    <AttributeName>id</AttributeName>
+                    <AttributeType>integer</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>name</AttributeName>
+                    <AttributeType>string</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>powerDraw</AttributeName>
+                    <AttributeType>integer</AttributeType>
+                </Attribute>
+            </Attributes>
+        </Entity>
+        <Entity>
+            <EntityName>RAM</EntityName>
+            <EntityDescription>Table to store DDR5 RAM information.</EntityDescription>
+            <Attributes>
+                <Attribute>
+                    <AttributeName>id</AttributeName>
+                    <AttributeType>integer</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>name</AttributeName>
+                    <AttributeType>string</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>capacity</AttributeName>
+                    <AttributeType>integer</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>powerDraw</AttributeName>
+                    <AttributeType>integer</AttributeType>
+                </Attribute>
+            </Attributes>
+        </Entity>
+        <Entity>
+            <EntityName>PowerSupplies</EntityName>
+            <EntityDescription>Table to store power supply information.</EntityDescription>
+            <Attributes>
+                <Attribute>
+                    <AttributeName>id</AttributeName>
+                    <AttributeType>integer</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>name</AttributeName>
+                    <AttributeType>string</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>wattage</AttributeName>
+                    <AttributeType>integer</AttributeType>
+                </Attribute>
+            </Attributes>
+        </Entity>
+        <Entity>
+            <EntityName>Builds</EntityName>
+            <EntityDescription>Table to store custom PC builds.</EntityDescription>
+            <Attributes>
+                <Attribute>
+                    <AttributeName>id</AttributeName>
+                    <AttributeType>integer</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>userId</AttributeName>
+                    <AttributeType>integer</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>cpuId</AttributeName>
+                    <AttributeType>integer</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>motherboardId</AttributeName>
+                    <AttributeType>integer</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>gpuId</AttributeName>
+                    <AttributeType>integer</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>ramId</AttributeName>
+                    <AttributeType>integer</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>powerSupplyId</AttributeName>
+                    <AttributeType>integer</AttributeType>
+                </Attribute>
+            </Attributes>
+        </Entity>
+    </DatabaseSchema>
+</ProjectSpecification>

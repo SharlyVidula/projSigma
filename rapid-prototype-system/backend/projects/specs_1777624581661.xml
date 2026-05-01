@@ -1,0 +1,176 @@
+<ProjectSpecification>
+    <ProjectName>SciCalc</ProjectName>
+    <Summary>A comprehensive scientific calculator application that performs advanced mathematical operations, including trigonometric, exponential, and logarithmic functions, and supports user profiles for saving calculations and history.</Summary>
+    <UserRoles>
+        <UserRole>
+            <Name>Admin</Name>
+            <Description>Responsible for managing user accounts and application settings.</Description>
+            <Permissions>Manage users, update application settings, view calculation history</Permissions>
+        </UserRole>
+        <UserRole>
+            <Name>StandardUser</Name>
+            <Description>Can perform calculations, save favorites, and view personal calculation history.</Description>
+            <Permissions>Perform calculations, save favorites, view personal history</Permissions>
+        </UserRole>
+    </UserRoles>
+    <FunctionalRequirements>
+        <FunctionalRequirement>
+            <Name>Basic Arithmetic Operations</Name>
+            <Description>Support addition, subtraction, multiplication, and division.</Description>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <Name>Trigonometric Operations</Name>
+            <Description>Support sine, cosine, and tangent functions.</Description>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <Name>Exponential and Logarithmic Operations</Name>
+            <Description>Support exponential and logarithmic functions, including base change.</Description>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <Name>Statistical Operations</Name>
+            <Description>Support mean, median, mode, and standard deviation calculations.</Description>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <Name>User Profile Management</Name>
+            <Description>Allow users to create profiles, save calculations, and view history.</Description>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <Name>Calculation History</Name>
+            <Description>Store and display calculation history for each user.</Description>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <Name>Favorite Calculations</Name>
+            <Description>Allow users to save frequently used calculations for quick access.</Description>
+        </FunctionalRequirement>
+    </FunctionalRequirements>
+    <UIStructure>
+        <Page>
+            <Name>Calculator</Name>
+            <Description>Main calculator interface with buttons for numbers, operators, and functions.</Description>
+            <Components>
+                <Component>
+                    <Name>DisplayScreen</Name>
+                    <Description>Displays current calculation and result.</Description>
+                </Component>
+                <Component>
+                    <Name>ButtonPanel</Name>
+                    <Description>Contains buttons for numbers, operators, and functions.</Description>
+                </Component>
+            </Components>
+        </Page>
+        <Page>
+            <Name>History</Name>
+            <Description>Displays calculation history for the current user.</Description>
+            <Components>
+                <Component>
+                    <Name>HistoryList</Name>
+                    <Description>Lists previous calculations with dates and results.</Description>
+                </Component>
+            </Components>
+        </Page>
+        <Page>
+            <Name>Favorites</Name>
+            <Description>Displays saved favorite calculations for the current user.</Description>
+            <Components>
+                <Component>
+                    <Name>FavoritesList</Name>
+                    <Description>Lists saved favorite calculations with names and formulas.</Description>
+                </Component>
+            </Components>
+        </Page>
+        <Page>
+            <Name>Settings</Name>
+            <Description>Allows users to manage their profiles and application settings.</Description>
+            <Components>
+                <Component>
+                    <Name>UserProfile</Name>
+                    <Description>Displays user profile information and allows editing.</Description>
+                </Component>
+                <Component>
+                    <Name>ApplicationSettings</Name>
+                    <Description>Allows users to customize application settings, such as theme and precision.</Description>
+                </Component>
+            </Components>
+        </Page>
+    </UIStructure>
+    <DatabaseSchema>
+        <Entity>
+            <Name>Users</Name>
+            <Description>Stores user profile information.</Description>
+            <Attributes>
+                <Attribute>
+                    <Name>UserID</Name>
+                    <Type>Integer</Type>
+                    <Description>Unique user identifier.</Description>
+                </Attribute>
+                <Attribute>
+                    <Name>Username</Name>
+                    <Type>String</Type>
+                    <Description>User-chosen username.</Description>
+                </Attribute>
+                <Attribute>
+                    <Name>Password</Name>
+                    <Type>String</Type>
+                    <Description>User password (hashed for security).</Description>
+                </Attribute>
+            </Attributes>
+        </Entity>
+        <Entity>
+            <Name>Calculations</Name>
+            <Description>Stores calculation history for each user.</Description>
+            <Attributes>
+                <Attribute>
+                    <Name>CalculationID</Name>
+                    <Type>Integer</Type>
+                    <Description>Unique calculation identifier.</Description>
+                </Attribute>
+                <Attribute>
+                    <Name>UserID</Name>
+                    <Type>Integer</Type>
+                    <Description>Foreign key referencing the Users entity.</Description>
+                </Attribute>
+                <Attribute>
+                    <Name>Formula</Name>
+                    <Type>String</Type>
+                    <Description>Mathematical formula used for the calculation.</Description>
+                </Attribute>
+                <Attribute>
+                    <Name>Result</Name>
+                    <Type>String</Type>
+                    <Description>Result of the calculation.</Description>
+                </Attribute>
+                <Attribute>
+                    <Name>Timestamp</Name>
+                    <Type>DateTime</Type>
+                    <Description>Timestamp when the calculation was performed.</Description>
+                </Attribute>
+            </Attributes>
+        </Entity>
+        <Entity>
+            <Name>Favorites</Name>
+            <Description>Stores saved favorite calculations for each user.</Description>
+            <Attributes>
+                <Attribute>
+                    <Name>FavoriteID</Name>
+                    <Type>Integer</Type>
+                    <Description>Unique favorite identifier.</Description>
+                </Attribute>
+                <Attribute>
+                    <Name>UserID</Name>
+                    <Type>Integer</Type>
+                    <Description>Foreign key referencing the Users entity.</Description>
+                </Attribute>
+                <Attribute>
+                    <Name>Formula</Name>
+                    <Type>String</Type>
+                    <Description>Mathematical formula used for the favorite calculation.</Description>
+                </Attribute>
+                <Attribute>
+                    <Name>Name</Name>
+                    <Type>String</Type>
+                    <Description>User-chosen name for the favorite calculation.</Description>
+                </Attribute>
+            </Attributes>
+        </Entity>
+    </DatabaseSchema>
+</ProjectSpecification>

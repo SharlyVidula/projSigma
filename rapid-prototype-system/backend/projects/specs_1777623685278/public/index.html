@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecruitHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900">
+    <header class="bg-gray-800 py-4">
+        <nav class="container mx-auto flex justify-between">
+            <a href="#" class="text-lg font-bold text-white">RecruitHub</a>
+            <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">Upload Resume</button>
+        </nav>
+    </header>
+    <main class="container mx-auto p-4 pt-6 md:p-6 lg:p-12 xl:p-24">
+        <section class="bg-gray-700 p-4 rounded">
+            <h2 class="text-lg font-bold text-white">Statistical Overview</h2>
+            <div class="flex justify-between">
+                <div class="bg-gray-600 p-4 rounded">
+                    <h3 class="text-lg font-bold text-white">Total Applications</h3>
+                    <p class="text-lg font-bold text-white" id="total-applications">0</p>
+                </div>
+                <div class="bg-gray-600 p-4 rounded">
+                    <h3 class="text-lg font-bold text-white">Hiring Rate</h3>
+                    <p class="text-lg font-bold text-white" id="hiring-rate">0%</p>
+                </div>
+            </div>
+        </section>
+        <section class="bg-gray-700 p-4 rounded">
+            <h2 class="text-lg font-bold text-white">Candidate Pipeline</h2>
+            <div class="flex justify-between">
+                <div class="bg-gray-600 p-4 rounded">
+                    <h3 class="text-lg font-bold text-white">Applied</h3>
+                    <ul id="applied-candidates">
+                    </ul>
+                </div>
+                <div class="bg-gray-600 p-4 rounded">
+                    <h3 class="text-lg font-bold text-white">Interviewing</h3>
+                    <ul id="interviewing-candidates">
+                    </ul>
+                </div>
+                <div class="bg-gray-600 p-4 rounded">
+                    <h3 class="text-lg font-bold text-white">Hired</h3>
+                    <ul id="hired-candidates">
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script>
+        const totalApplications = document.getElementById('total-applications');
+        const hiringRate = document.getElementById('hiring-rate');
+        const appliedCandidates = document.getElementById('applied-candidates');
+        const interviewingCandidates = document.getElementById('interviewing-candidates');
+        const hiredCandidates = document.getElementById('hired-candidates');
+        
+        fetch('/candidates')
+            .then(response => response.json())
+            .then(data => {
+                totalApplications.textContent = data.length;
+                hiringRate.textContent = (data.filter(candidate => candidate.status === 'Hired').length / data.length * 100).toFixed(2) + '%';
+                
+                data.forEach(candidate => {
+                    const li = document.createElement('li');
+                    li.textContent = candidate.name;
+                    
+                    if (candidate.status === 'Applied') {
+                        appliedCandidates.appendChild(li);
+                    } else if (candidate.status === 'Interviewing') {
+                        interviewingCandidates.appendChild(li);
+                    } else if (candidate.status === 'Hired') {
+                        hiredCandidates.appendChild(li);
+                    }
+                });
+            });
+    </script>
+</body>
+</html>

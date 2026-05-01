@@ -1,0 +1,163 @@
+<ProjectSpecification>
+    <ProjectName>RecruitHub</ProjectName>
+    <Summary>A modern recruitment platform for HR managers to manage candidate pipelines and parse resumes using AI</Summary>
+    <UserRoles>
+        <UserRole>
+            <RoleName>HR Manager</RoleName>
+            <RoleDescription>Responsible for managing candidate pipelines, uploading resumes, and viewing statistical overviews</RoleDescription>
+            <Permissions>
+                <Permission>View Candidate Pipeline</Permission>
+                <Permission>Upload Resumes</Permission>
+                <Permission>View Statistical Overview</Permission>
+                <Permission>Manage Candidate Profiles</Permission>
+            </Permissions>
+        </UserRole>
+        <UserRole>
+            <RoleName>Admin</RoleName>
+            <RoleDescription>Responsible for managing system settings, user accounts, and access controls</RoleDescription>
+            <Permissions>
+                <Permission>Manage System Settings</Permission>
+                <Permission>Manage User Accounts</Permission>
+                <Permission>Manage Access Controls</Permission>
+            </Permissions>
+        </UserRole>
+    </UserRoles>
+    <FunctionalRequirements>
+        <FunctionalRequirement>
+            <RequirementName>Candidate Pipeline Management</RequirementName>
+            <RequirementDescription>Allow HR managers to manage candidate pipelines using a Kanban board with drag-and-drop functionality</RequirementDescription>
+            <AcceptanceCriteria>
+                <AcceptanceCriterion>Candidates can be moved between 'Applied', 'Interviewing', and 'Hired' columns</AcceptanceCriterion>
+                <AcceptanceCriterion>Candidates can be added, edited, and deleted from the pipeline</AcceptanceCriterion>
+            </AcceptanceCriteria>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>AI Resume Parser</RequirementName>
+            <RequirementDescription>Allow HR managers to upload resumes and automatically populate candidate profile cards with skills, experience, and education</RequirementDescription>
+            <AcceptanceCriteria>
+                <AcceptanceCriterion>Resumes can be uploaded in various formats (e.g., PDF, DOCX, TXT)</AcceptanceCriterion>
+                <AcceptanceCriterion>Candidate profile cards are populated with relevant information extracted from the resume</AcceptanceCriterion>
+            </AcceptanceCriteria>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Statistical Overview</RequirementName>
+            <RequirementDescription>Display a statistical overview section at the top of the dashboard showing total applications and hiring rates</RequirementDescription>
+            <AcceptanceCriteria>
+                <AcceptanceCriterion>Total applications are displayed in real-time</AcceptanceCriterion>
+                <AcceptanceCriterion>Hiring rates are displayed in real-time</AcceptanceCriterion>
+            </AcceptanceCriteria>
+        </FunctionalRequirement>
+    </FunctionalRequirements>
+    <UIStructure>
+        <Page>
+            <PageName>Dashboard</PageName>
+            <PageDescription>The main dashboard page for HR managers</PageDescription>
+            <Components>
+                <Component>
+                    <ComponentName>Statistical Overview</ComponentName>
+                    <ComponentDescription>A section displaying total applications and hiring rates</ComponentDescription>
+                </Component>
+                <Component>
+                    <ComponentName>Candidate Pipeline</ComponentName>
+                    <ComponentDescription>A Kanban board for managing candidate pipelines</ComponentDescription>
+                </Component>
+                <Component>
+                    <ComponentName>Resume Parser</ComponentName>
+                    <ComponentDescription>A section for uploading resumes and viewing candidate profile cards</ComponentDescription>
+                </Component>
+                <Component>
+                    <ComponentName>Sidebar Navigation Menu</ComponentName>
+                    <ComponentDescription>A menu for navigating between pages and features</ComponentDescription>
+                </Component>
+            </Components>
+        </Page>
+        <Page>
+            <PageName>Candidate Profile</PageName>
+            <PageDescription>A page for viewing and editing candidate profiles</PageDescription>
+            <Components>
+                <Component>
+                    <ComponentName>Candidate Profile Card</ComponentName>
+                    <ComponentDescription>A card displaying candidate information, including skills, experience, and education</ComponentDescription>
+                </Component>
+                <Component>
+                    <ComponentName>Profile Editor</ComponentName>
+                    <ComponentDescription>A form for editing candidate profile information</ComponentDescription>
+                </Component>
+            </Components>
+        </Page>
+    </UIStructure>
+    <DatabaseSchema>
+        <Entity>
+            <EntityName>Candidates</EntityName>
+            <EntityDescription>A table for storing candidate information</EntityDescription>
+            <Attributes>
+                <Attribute>
+                    <AttributeName>ID</AttributeName>
+                    <AttributeType>Integer</AttributeType>
+                    <AttributeDescription>Unique identifier for the candidate</AttributeDescription>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>Name</AttributeName>
+                    <AttributeType>String</AttributeType>
+                    <AttributeDescription>Candidate name</AttributeDescription>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>Skills</AttributeName>
+                    <AttributeType>String</AttributeType>
+                    <AttributeDescription>Candidate skills</AttributeDescription>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>Experience</AttributeName>
+                    <AttributeType>String</AttributeType>
+                    <AttributeDescription>Candidate experience</AttributeDescription>
+                </Attribute>
+                <Attribute>
+                    <AttributeType>Education</AttributeType>
+                    <AttributeDescription>Candidate education</AttributeDescription>
+                </Attribute>
+            </Attributes>
+        </Entity>
+        <Entity>
+            <EntityName>Resumes</EntityName>
+            <EntityDescription>A table for storing uploaded resumes</EntityDescription>
+            <Attributes>
+                <Attribute>
+                    <AttributeName>ID</AttributeName>
+                    <AttributeType>Integer</AttributeType>
+                    <AttributeDescription>Unique identifier for the resume</AttributeDescription>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>CandidateID</AttributeName>
+                    <AttributeType>Integer</AttributeType>
+                    <AttributeDescription>Foreign key referencing the Candidates table</AttributeDescription>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>ResumeFile</AttributeName>
+                    <AttributeType>Blob</AttributeType>
+                    <AttributeDescription>Uploaded resume file</AttributeDescription>
+                </Attribute>
+            </Attributes>
+        </Entity>
+        <Entity>
+            <EntityName>Pipeline</EntityName>
+            <EntityDescription>A table for storing pipeline data</EntityDescription>
+            <Attributes>
+                <Attribute>
+                    <AttributeName>ID</AttributeName>
+                    <AttributeType>Integer</AttributeType>
+                    <AttributeDescription>Unique identifier for the pipeline</AttributeDescription>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>CandidateID</AttributeName>
+                    <AttributeType>Integer</AttributeType>
+                    <AttributeDescription>Foreign key referencing the Candidates table</AttributeDescription>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>Stage</AttributeName>
+                    <AttributeType>String</AttributeType>
+                    <AttributeDescription>Pipeline stage (e.g., 'Applied', 'Interviewing', 'Hired')</AttributeDescription>
+                </Attribute>
+            </Attributes>
+        </Entity>
+    </DatabaseSchema>
+</ProjectSpecification>

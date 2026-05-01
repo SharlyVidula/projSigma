@@ -10,6 +10,7 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;
+let prototypePort = 3005; // We will increment this for every new build
 
 app.use(cors());
 app.use(express.json());
@@ -84,6 +85,7 @@ app.post('/api/generate-xml', async (req, res) => {
     }
 });
 // Level 2: The Execution Engine (Antigravity Simulator)
+// Level 2 & 3: The Execution Engine (Autonomous Coding Agent)
 app.post('/api/build-prototype', async (req, res) => {
     try {
         const { fileName } = req.body;
@@ -92,44 +94,82 @@ app.post('/api/build-prototype', async (req, res) => {
             return res.status(400).json({ error: "No XML file specified." });
         }
 
-        console.log(`Starting Antigravity build process for ${fileName}...`);
+        console.log(`Starting Autonomous Agent for ${fileName}...`);
 
-        // Define where the new prototype will be built
-        const prototypeDir = path.resolve('projects', 'generated_prototype');
+        // 1. Read the XML file we generated in Level 1
+        const xmlFilePath = path.join(path.resolve('projects'), fileName);
+        const xmlContent = await fs.readFile(xmlFilePath, 'utf8');
 
-        // 1. Create the folder if it doesn't exist
-        await fs.mkdir(prototypeDir, { recursive: true });
+        // 2. The Agent Prompt: Telling Groq to write actual code based on the XML
+        const coderPrompt = `You are an Expert Full-Stack Developer and UI/UX Designer. 
+        Read the following XML architecture and build a working prototype.
+        
+        CRITICAL INSTRUCTION: You must respond ONLY with a raw, valid JSON object. Do NOT wrap it in markdown code blocks (like \`\`\`json). Do not add any conversational text.
+        The keys of the JSON must be the exact file paths, and the values must be the exact code string.
+        
+        Required files to generate:
+        1. "package.json": Must include "express", "cors", and "mongoose". Include a start script: "node server.js".
+        2. "server.js": An Express backend with mock API routes based on the XML. Serve static files from "public". CRITICAL: You MUST use process.env.PORT for your listener (e.g., const PORT = process.env.PORT || 3005; app.listen(PORT...)).
+        3. "public/index.html": The frontend UI. 
+           - UI/UX RULES: You MUST use Tailwind CSS via CDN. 
+           - DO NOT output plain, unstyled HTML. 
+           - Implement a modern, sleek aesthetic (e.g., dark mode, CSS grid/flexbox, glassmorphism, styled cards for components, hover effects, and nice typography). 
+           - The layout should look like a premium, professional web application. 
+           - Include interactive inline JavaScript to make the wattage calculator and compatibility checks actually update the DOM visually.`;
+        console.log("Agent is writing the codebase. Please wait...");
 
-        // 2. Here is where the "Antigravity Agent" would read the XML and write the code.
-        // For now, let's have it write a simple index.html to prove it works
-        const htmlContent = `
-            <!DOCTYPE html>
-            <html>
-            <head><title>Generated Prototype</title></head>
-            <body style="font-family: sans-serif; padding: 50px;">
-                <h1>🚀 Your Prototype is Live!</h1>
-                <p>This was generated based on the XML file: ${fileName}</p>
-                <p>Next step: Make the agent parse the XML and write MERN stack code here.</p>
-            </body>
-            </html>
-        `;
-
-        await fs.writeFile(path.join(prototypeDir, 'index.html'), htmlContent, 'utf8');
-
-        // 3. Spin up a lightweight server on port 3001 to serve this prototype
-        // We use 'npx serve' which is a fast way to serve static files
-        console.log("Booting up the prototype on port 3001...");
-
-        const buildProcess = exec('npx serve -p 3001', { cwd: prototypeDir });
-
-        buildProcess.stdout.on('data', (data) => console.log(`Prototype Log: ${data}`));
-        buildProcess.stderr.on('data', (data) => console.error(`Prototype Error: ${data}`));
-
-        // Tell the frontend that it's ready!
-        res.status(200).json({
-            message: "Prototype built and running!",
-            url: "http://localhost:3001"
+        // 3. Send to Groq
+        const response = await openai.chat.completions.create({
+            model: "llama-3.3-70b-versatile",
+            messages: [
+                { role: "system", content: coderPrompt },
+                { role: "user", content: xmlContent }
+            ],
+            temperature: 0.1,
+            response_format: { type: "json_object" } // Very low temperature so it strictly follows the JSON rules
         });
+
+        // 4. Clean and parse the AI's response into a JSON object
+        let rawCode = response.choices[0].message.content;
+        // Sometimes AI adds markdown anyway, this strips it out just in case
+        rawCode = rawCode.replace(/```json/g, '').replace(/```/g, '').trim();
+
+        const codeFiles = JSON.parse(rawCode);
+
+        // 5. Create a unique folder for this specific build
+        const buildId = fileName.replace('.xml', '');
+        const prototypeDir = path.resolve('projects', buildId);
+        await fs.mkdir(prototypeDir, { recursive: true });
+        await fs.mkdir(path.join(prototypeDir, 'public'), { recursive: true });
+
+        // 6. Loop through the JSON object and write the actual code files to your hard drive!
+        for (const [filePath, fileContent] of Object.entries(codeFiles)) {
+            await fs.writeFile(path.join(prototypeDir, filePath), fileContent, 'utf8');
+            console.log(`Agent wrote file: ${filePath}`);
+        }
+
+        // 7. Spin up the Prototype! (Runs npm install, then node server.js)
+        // 7. Spin up the Prototype on a dynamic port!
+        console.log("Installing dependencies and booting prototype...");
+
+        prototypePort++; // Increase the port number so it never clashes
+        const currentPort = prototypePort;
+
+        const buildProcess = exec(`npm install && node server.js`, {
+            cwd: prototypeDir,
+            env: { ...process.env, PORT: currentPort }
+        });
+
+        buildProcess.stdout.on('data', (data) => console.log(`[Prototype]: ${data}`));
+        buildProcess.stderr.on('data', (data) => console.error(`[Prototype Error]: ${data}`));
+
+        // 8. Tell the React UI that it's ready on the NEW port
+        setTimeout(() => {
+            res.status(200).json({
+                message: "Prototype built and running!",
+                url: `http://localhost:${currentPort}`
+            });
+        }, 3000);
 
     } catch (error) {
         console.error("Error during prototype build:", error);

@@ -1,0 +1,174 @@
+<ProjectSpecification>
+    <ProjectName>SciCalc</ProjectName>
+    <Summary>A comprehensive scientific calculator application that performs advanced mathematical operations, including trigonometric, exponential, and logarithmic functions, and supports user profiles for saving calculations and results.</Summary>
+    <UserRoles>
+        <UserRole>
+            <RoleName>Guest</RoleName>
+            <Description>Basic user with access to calculator functionality</Description>
+            <Permissions>Use calculator, view history</Permissions>
+        </UserRole>
+        <UserRole>
+            <RoleName>RegisteredUser</RoleName>
+            <Description>Registered user with access to calculator functionality, history, and saved calculations</Description>
+            <Permissions>Use calculator, view history, save calculations, edit profile</Permissions>
+        </UserRole>
+        <UserRole>
+            <RoleName>Admin</RoleName>
+            <Description>Administrator with access to all features, including user management and calculator configuration</Description>
+            <Permissions>Use calculator, view history, save calculations, edit profile, manage users, configure calculator</Permissions>
+        </UserRole>
+    </UserRoles>
+    <FunctionalRequirements>
+        <FunctionalRequirement>
+            <RequirementName>Basic Arithmetic Operations</RequirementName>
+            <Description>Support for addition, subtraction, multiplication, and division</Description>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Trigonometric Functions</RequirementName>
+            <Description>Support for sine, cosine, and tangent functions</Description>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Exponential and Logarithmic Functions</RequirementName>
+            <Description>Support for exponential and logarithmic functions, including base change</Description>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Statistical Functions</RequirementName>
+            <Description>Support for mean, median, mode, and standard deviation calculations</Description>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>History and Saved Calculations</RequirementName>
+            <Description>Ability to view and save calculation history and results</Description>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>User Profile Management</RequirementName>
+            <Description>Ability to create, edit, and manage user profiles</Description>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Calculator Configuration</RequirementName>
+            <Description>Ability to configure calculator settings, including display format and precision</Description>
+        </FunctionalRequirement>
+    </FunctionalRequirements>
+    <UIStructure>
+        <Page>
+            <PageName>Calculator</PageName>
+            <Description>Main calculator page with input field and buttons for operations</Description>
+            <Components>
+                <Component>
+                    <ComponentName>InputField</ComponentName>
+                    <Description>Text field for entering calculations</Description>
+                </Component>
+                <Component>
+                    <ComponentName>OperationButtons</ComponentName>
+                    <Description>Buttons for basic arithmetic operations and functions</Description>
+                </Component>
+                <Component>
+                    <ComponentName>ResultDisplay</ComponentName>
+                    <Description>Display field for showing calculation results</Description>
+                </Component>
+            </Components>
+        </Page>
+        <Page>
+            <PageName>History</PageName>
+            <Description>Page for viewing calculation history and saved results</Description>
+            <Components>
+                <Component>
+                    <ComponentName>HistoryList</ComponentName>
+                    <Description>List of previous calculations and results</Description>
+                </Component>
+                <Component>
+                    <ComponentName>SaveButton</ComponentName>
+                    <Description>Button for saving calculations and results</Description>
+                </Component>
+            </Components>
+        </Page>
+        <Page>
+            <PageName>Profile</PageName>
+            <Description>Page for managing user profiles and settings</Description>
+            <Components>
+                <Component>
+                    <ComponentName>ProfileForm</ComponentName>
+                    <Description>Form for editing user profile information</Description>
+                </Component>
+                <Component>
+                    <ComponentName>Settings</ComponentName>
+                    <Description>Section for configuring calculator settings</Description>
+                </Component>
+            </Components>
+        </Page>
+    </UIStructure>
+    <DatabaseSchema>
+        <Entity>
+            <EntityName>Users</EntityName>
+            <Description>Table for storing user information</Description>
+            <Attributes>
+                <Attribute>
+                    <AttributeName>id</AttributeName>
+                    <DataType>integer</DataType>
+                    <Description>Unique user ID</Description>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>username</AttributeName>
+                    <DataType>string</DataType>
+                    <Description>Username chosen by the user</Description>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>password</AttributeName>
+                    <DataType>string</DataType>
+                    <Description>Password for the user account</Description>
+                </Attribute>
+            </Attributes>
+        </Entity>
+        <Entity>
+            <EntityName>Calculations</EntityName>
+            <Description>Table for storing calculation history and results</Description>
+            <Attributes>
+                <Attribute>
+                    <AttributeName>id</AttributeName>
+                    <DataType>integer</DataType>
+                    <Description>Unique calculation ID</Description>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>user_id</AttributeName>
+                    <DataType>integer</DataType>
+                    <Description>Foreign key referencing the Users table</Description>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>calculation</AttributeName>
+                    <DataType>string</DataType>
+                    <Description>Calculation input by the user</Description>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>result</AttributeName>
+                    <DataType>string</DataType>
+                    <Description>Result of the calculation</Description>
+                </Attribute>
+            </Attributes>
+        </Entity>
+        <Entity>
+            <EntityName>Settings</EntityName>
+            <Description>Table for storing calculator settings</Description>
+            <Attributes>
+                <Attribute>
+                    <AttributeName>id</AttributeName>
+                    <DataType>integer</DataType>
+                    <Description>Unique setting ID</Description>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>user_id</AttributeName>
+                    <DataType>integer</DataType>
+                    <Description>Foreign key referencing the Users table</Description>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>display_format</AttributeName>
+                    <DataType>string</DataType>
+                    <Description>Display format chosen by the user</Description>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>precision</AttributeName>
+                    <DataType>integer</DataType>
+                    <Description>Number of decimal places to display</Description>
+                </Attribute>
+            </Attributes>
+        </Entity>
+    </DatabaseSchema>
+</ProjectSpecification>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SciCalc</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900">
+    <div class="container mx-auto p-4 pt-6 mt-10 bg-gray-800 rounded-lg shadow-lg">
+        <h1 class="text-3xl text-white">SciCalc</h1>
+        <div class="flex flex-wrap justify-center">
+            <div class="w-full lg:w-1/2 xl:w-1/3 p-6">
+                <div class="bg-gray-700 rounded-lg shadow-lg p-4">
+                    <h2 class="text-xl text-white">Calculator</h2>
+                    <input type="text" id="display" class="w-full p-2 bg-gray-600 text-white rounded-lg" disabled>
+                    <div class="flex flex-wrap justify-center">
+                        <button class="w-1/4 p-2 m-1 bg-gray-600 text-white rounded-lg hover:bg-gray-500" onclick="calculate('7')">7</button>
+                        <button class="w-1/4 p-2 m-1 bg-gray-600 text-white rounded-lg hover:bg-gray-500" onclick="calculate('8')">8</button>
+                        <button class="w-1/4 p-2 m-1 bg-gray-600 text-white rounded-lg hover:bg-gray-500" onclick="calculate('9')">9</button>
+                        <button class="w-1/4 p-2 m-1 bg-gray-600 text-white rounded-lg hover:bg-gray-500" onclick="calculate('/')">/</button>
+                        <button class="w-1/4 p-2 m-1 bg-gray-600 text-white rounded-lg hover:bg-gray-500" onclick="calculate('4')">4</button>
+                        <button class="w-1/4 p-2 m-1 bg-gray-600 text-white rounded-lg hover:bg-gray-500" onclick="calculate('5')">5</button>
+                        <button class="w-1/4 p-2 m-1 bg-gray-600 text-white rounded-lg hover:bg-gray-500" onclick="calculate('6')">6</button>
+                        <button class="w-1/4 p-2 m-1 bg-gray-600 text-white rounded-lg hover:bg-gray-500" onclick="calculate('*')">*</button>
+                        <button class="w-1/4 p-2 m-1 bg-gray-600 text-white rounded-lg hover:bg-gray-500" onclick="calculate('1')">1</button>
+                        <button class="w-1/4 p-2 m-1 bg-gray-600 text-white rounded-lg hover:bg-gray-500" onclick="calculate('2')">2</button>
+                        <button class="w-1/4 p-2 m-1 bg-gray-600 text-white rounded-lg hover:bg-gray-500" onclick="calculate('3')">3</button>
+                        <button class="w-1/4 p-2 m-1 bg-gray-600 text-white rounded-lg hover:bg-gray-500" onclick="calculate('-')">-</button>
+                        <button class="w-1/4 p-2 m-1 bg-gray-600 text-white rounded-lg hover:bg-gray-500" onclick="calculate('0')">0</button>
+                        <button class="w-1/4 p-2 m-1 bg-gray-600 text-white rounded-lg hover:bg-gray-500" onclick="calculate('.')">.</button>
+                        <button class="w-1/4 p-2 m-1 bg-gray-600 text-white rounded-lg hover:bg-gray-500" onclick="calculate('=')">=</button>
+                        <button class="w-1/4 p-2 m-1 bg-gray-600 text-white rounded-lg hover:bg-gray-500" onclick="calculate('+')">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full lg:w-1/2 xl:w-1/3 p-6">
+                <div class="bg-gray-700 rounded-lg shadow-lg p-4">
+                    <h2 class="text-xl text-white">Wattage Calculator</h2>
+                    <input type="number" id="voltage" class="w-full p-2 bg-gray-600 text-white rounded-lg" placeholder="Voltage">
+                    <input type="number" id="current" class="w-full p-2 mt-2 bg-gray-600 text-white rounded-lg" placeholder="Current">
+                    <button class="w-full p-2 mt-2 bg-gray-600 text-white rounded-lg hover:bg-gray-500" onclick="calculateWattage()">Calculate Wattage</button>
+                    <p id="wattage" class="text-white"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function calculate(key) {
+            const display = document.getElementById('display');
+            if (key === '=') {
+                try {
+                    const result = eval(display.value);
+                    display.value = result;
+                } catch (e) {
+                    display.value = 'Error';
+                }
+            } else {
+                display.value += key;
+            }
+        }
+        function calculateWattage() {
+            const voltage = document.getElementById('voltage').value;
+            const current = document.getElementById('current').value;
+            if (voltage && current) {
+                const wattage = voltage * current;
+                document.getElementById('wattage').innerText = `Wattage: ${wattage} W`;
+            } else {
+                document.getElementById('wattage').innerText = 'Please enter voltage and current';
+            }
+        }
+    </script>
+</body>
+</html>

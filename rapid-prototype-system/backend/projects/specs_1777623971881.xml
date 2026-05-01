@@ -1,0 +1,167 @@
+<ProjectSpecification>
+    <ProjectName>HotelMaster</ProjectName>
+    <Summary>A comprehensive hotel management system for efficient guest services, room management, and administrative operations.</Summary>
+    <UserRoles>
+        <UserRole>
+            <RoleName>Admin</RoleName>
+            <RoleDescription>System administrator with full access to all features.</RoleDescription>
+            <Permissions>Full access to all modules</Permissions>
+        </UserRole>
+        <UserRole>
+            <RoleName>Receptionist</RoleName>
+            <RoleDescription>Handles guest check-in, check-out, and room assignments.</RoleDescription>
+            <Permissions>Access to guest management, room management, and billing modules</Permissions>
+        </UserRole>
+        <UserRole>
+            <RoleName>Housekeeping</RoleName>
+            <RoleDescription>Manages room cleaning and maintenance schedules.</RoleDescription>
+            <Permissions>Access to room management and maintenance modules</Permissions>
+        </UserRole>
+        <UserRole>
+            <RoleName>Accountant</RoleName>
+            <RoleDescription>Manages financial transactions, invoices, and reports.</RoleDescription>
+            <Permissions>Access to billing, invoicing, and financial reporting modules</Permissions>
+        </UserRole>
+    </UserRoles>
+    <FunctionalRequirements>
+        <FunctionalRequirement>
+            <RequirementName>Guest Management</RequirementName>
+            <RequirementDescription>Manage guest information, including check-in, check-out, and room assignments.</RequirementDescription>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Room Management</RequirementName>
+            <RequirementDescription>Manage room inventory, including room types, rates, and availability.</RequirementDescription>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Billing and Invoicing</RequirementName>
+            <RequirementDescription>Generate invoices and manage payments for guest stays and services.</RequirementDescription>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Maintenance Scheduling</RequirementName>
+            <RequirementDescription>Schedule and track maintenance activities for rooms and hotel facilities.</RequirementDescription>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Reporting and Analytics</RequirementName>
+            <RequirementDescription>Generate reports on hotel occupancy, revenue, and guest demographics.</RequirementDescription>
+        </FunctionalRequirement>
+    </FunctionalRequirements>
+    <UIStructure>
+        <Page>
+            <PageName>Dashboard</PageName>
+            <PageDescription>Overview of hotel operations, including occupancy, revenue, and guest information.</PageDescription>
+            <Components>
+                <Component>
+                    <ComponentName>Occupancy Chart</ComponentName>
+                    <ComponentDescription>Displays current occupancy rates and trends.</ComponentDescription>
+                </Component>
+                <Component>
+                    <ComponentName>Revenue Summary</ComponentName>
+                    <ComponentDescription>Displays total revenue and breakdown by room type and services.</ComponentDescription>
+                </Component>
+            </Components>
+        </Page>
+        <Page>
+            <PageName>Guest Management</PageName>
+            <PageDescription>Manage guest information, including check-in, check-out, and room assignments.</PageDescription>
+            <Components>
+                <Component>
+                    <ComponentName>Guest List</ComponentName>
+                    <ComponentDescription>Displays list of current guests, including room assignments and check-out dates.</ComponentDescription>
+                </Component>
+                <Component>
+                    <ComponentName>Check-in/Check-out Form</ComponentName>
+                    <ComponentDescription>Handles guest check-in and check-out processes.</ComponentDescription>
+                </Component>
+            </Components>
+        </Page>
+        <Page>
+            <PageName>Room Management</PageName>
+            <PageDescription>Manage room inventory, including room types, rates, and availability.</PageDescription>
+            <Components>
+                <Component>
+                    <ComponentName>Room List</ComponentName>
+                    <ComponentName>Displays list of available rooms, including room types and rates.</ComponentName>
+                </Component>
+                <Component>
+                    <ComponentName>Room Assignment Form</ComponentName>
+                    <ComponentDescription>Handles room assignments for guests.</ComponentDescription>
+                </Component>
+            </Components>
+        </Page>
+    </UIStructure>
+    <DatabaseSchema>
+        <Entity>
+            <EntityName>Guest</EntityName>
+            <EntityDescription>Represents a hotel guest.</EntityDescription>
+            <Attributes>
+                <Attribute>
+                    <AttributeName>GuestID</AttributeName>
+                    <AttributeType>Integer</AttributeType>
+                    <AttributeDescription>Unique identifier for the guest.</AttributeDescription>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>Name</AttributeName>
+                    <AttributeType>String</AttributeType>
+                    <AttributeDescription>Guest name.</AttributeDescription>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>Email</AttributeName>
+                    <AttributeType>String</AttributeType>
+                    <AttributeDescription>Guest email address.</AttributeDescription>
+                </Attribute>
+            </Attributes>
+        </Entity>
+        <Entity>
+            <EntityName>Room</EntityName>
+            <EntityDescription>Represents a hotel room.</EntityDescription>
+            <Attributes>
+                <Attribute>
+                    <AttributeName>RoomID</AttributeName>
+                    <AttributeType>Integer</AttributeType>
+                    <AttributeDescription>Unique identifier for the room.</AttributeDescription>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>RoomType</AttributeName>
+                    <AttributeType>String</AttributeType>
+                    <AttributeDescription>Room type (e.g. single, double, suite).</AttributeDescription>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>Rate</AttributeName>
+                    <AttributeType>Decimal</AttributeType>
+                    <AttributeDescription>Room rate per night.</AttributeDescription>
+                </Attribute>
+            </Attributes>
+        </Entity>
+        <Entity>
+            <EntityName>Reservation</EntityName>
+            <EntityDescription>Represents a guest reservation.</EntityDescription>
+            <Attributes>
+                <Attribute>
+                    <AttributeName>ReservationID</AttributeName>
+                    <AttributeType>Integer</AttributeType>
+                    <AttributeDescription>Unique identifier for the reservation.</AttributeDescription>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>GuestID</AttributeName>
+                    <AttributeType>Integer</AttributeType>
+                    <AttributeDescription>Foreign key referencing the Guest entity.</AttributeDescription>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>RoomID</AttributeName>
+                    <AttributeType>Integer</AttributeType>
+                    <AttributeDescription>Foreign key referencing the Room entity.</AttributeDescription>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>CheckInDate</AttributeName>
+                    <AttributeType>Date</AttributeType>
+                    <AttributeDescription>Check-in date for the reservation.</AttributeDescription>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>CheckOutDate</AttributeName>
+                    <AttributeType>Date</AttributeType>
+                    <AttributeDescription>Check-out date for the reservation.</AttributeDescription>
+                </Attribute>
+            </Attributes>
+        </Entity>
+    </DatabaseSchema>
+</ProjectSpecification>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PC Builder Pro</title>
+  <link rel="stylesheet" href="https://cdn.tailwindcss.com">
+</head>
+<body>
+  <div class="container mx-auto p-4 pt-6 mt-10">
+    <h1 class="text-3xl font-bold">PC Builder Pro</h1>
+    <form>
+      <div class="mb-4">
+        <label for="cpu" class="block text-gray-700 font-bold mb-2">CPU:</label>
+        <select id="cpu" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+          <option value="">Select CPU</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label for="motherboard" class="block text-gray-700 font-bold mb-2">Motherboard:</label>
+        <select id="motherboard" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+          <option value="">Select Motherboard</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label for="gpu" class="block text-gray-700 font-bold mb-2">GPU:</label>
+        <select id="gpu" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+          <option value="">Select GPU</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label for="ram" class="block text-gray-700 font-bold mb-2">RAM:</label>
+        <select id="ram" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+          <option value="">Select RAM</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label for="power-supply" class="block text-gray-700 font-bold mb-2">Power Supply:</label>
+        <select id="power-supply" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+          <option value="">Select Power Supply</option>
+        </select>
+      </div>
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button" onclick="calculateBuild()">Calculate Build</button>
+    </form>
+    <div id="build-summary" class="mt-10"></div>
+  </div>
+  <script>
+    const cpuSelect = document.getElementById('cpu');
+    const motherboardSelect = document.getElementById('motherboard');
+    const gpuSelect = document.getElementById('gpu');
+    const ramSelect = document.getElementById('ram');
+    const powerSupplySelect = document.getElementById('power-supply');
+    const buildSummaryDiv = document.getElementById('build-summary');
+    fetch('/api/cpus')
+      .then(response => response.json())
+      .then(cpus => {
+        cpuSelect.innerHTML = '';
+        cpus.forEach(cpu => {
+          const option = document.createElement('option');
+          option.value = cpu.id;
+          option.text = cpu.name;
+          cpuSelect.appendChild(option);
+        });
+      });
+    fetch('/api/motherboards')
+      .then(response => response.json())
+      .then(motherboards => {
+        motherboardSelect.innerHTML = '';
+        motherboards.forEach(motherboard => {
+          const option = document.createElement('option');
+          option.value = motherboard.id;
+          option.text = motherboard.name;
+          motherboardSelect.appendChild(option);
+        });
+      });
+    fetch('/api/gpus')
+      .then(response => response.json())
+      .then(gpus => {
+        gpuSelect.innerHTML = '';
+        gpus.forEach(gpu => {
+          const option = document.createElement('option');
+          option.value = gpu.id;
+          option.text = gpu.name;
+          gpuSelect.appendChild(option);
+        });
+      });
+    fetch('/api/ram')
+      .then(response => response.json())
+      .then(ram => {
+        ramSelect.innerHTML = '';
+        ram.forEach(ramItem => {
+          const option = document.createElement('option');
+          option.value = ramItem.id;
+          option.text = ramItem.name;
+          ramSelect.appendChild(option);
+        });
+      });
+    fetch('/api/power-supplies')
+      .then(response => response.json())
+      .then(powerSupplies => {
+        powerSupplySelect.innerHTML = '';
+        powerSupplies.forEach(powerSupply => {
+          const option = document.createElement('option');
+          option.value = powerSupply.id;
+          option.text = powerSupply.name;
+          powerSupplySelect.appendChild(option);
+        });
+      });
+    function calculateBuild() {
+      const cpuId = cpuSelect.value;
+      const motherboardId = motherboardSelect.value;
+      const gpuId = gpuSelect.value;
+      const ramId = ramSelect.value;
+      const powerSupplyId = powerSupplySelect.value;
+      const buildSummary = `CPU: ${cpuSelect.options[cpuSelect.selectedIndex].text}\nMotherboard: ${motherboardSelect.options[motherboardSelect.selectedIndex].text}\nGPU: ${gpuSelect.options[gpuSelect.selectedIndex].text}\nRAM: ${ramSelect.options[ramSelect.selectedIndex].text}\nPower Supply: ${powerSupplySelect.options[powerSupplySelect.selectedIndex].text}`;
+      buildSummaryDiv.innerText = buildSummary;
+    }
+  </script>
+</body>
+</html>

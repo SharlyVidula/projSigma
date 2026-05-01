@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PC Builder Pro</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mx-auto p-4 pt-6 mt-10">
+    <h1 class="text-3xl font-bold mb-4">PC Builder Pro</h1>
+    <form id="builder-form">
+      <div class="mb-4">
+        <label for="cpu" class="block text-gray-700 text-sm font-bold mb-2">CPU:</label>
+        <select id="cpu" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+          <option value="">Select CPU</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label for="motherboard" class="block text-gray-700 text-sm font-bold mb-2">Motherboard:</label>
+        <select id="motherboard" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+          <option value="">Select Motherboard</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label for="gpu" class="block text-gray-700 text-sm font-bold mb-2">GPU:</label>
+        <select id="gpu" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+          <option value="">Select GPU</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label for="ram" class="block text-gray-700 text-sm font-bold mb-2">RAM:</label>
+        <select id="ram" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+          <option value="">Select RAM</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label for="power-supply" class="block text-gray-700 text-sm font-bold mb-2">Power Supply:</label>
+        <select id="power-supply" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+          <option value="">Select Power Supply</option>
+        </select>
+      </div>
+      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Build</button>
+    </form>
+    <div id="build-summary" class="mt-10"></div>
+  </div>
+  <script>
+    const cpuSelect = document.getElementById('cpu');
+    const motherboardSelect = document.getElementById('motherboard');
+    const gpuSelect = document.getElementById('gpu');
+    const ramSelect = document.getElementById('ram');
+    const powerSupplySelect = document.getElementById('power-supply');
+    const buildSummary = document.getElementById('build-summary');
+    const builderForm = document.getElementById('builder-form');
+    builderForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const cpu = cpuSelect.value;
+      const motherboard = motherboardSelect.value;
+      const gpu = gpuSelect.value;
+      const ram = ramSelect.value;
+      const powerSupply = powerSupplySelect.value;
+      fetch('/api/cpus')
+        .then(response => response.json())
+        .then(cpus => {
+          const selectedCpu = cpus.find(cpu => cpu.id === parseInt(cpu));
+          if (selectedCpu) {
+            fetch('/api/motherboards')
+              .then(response => response.json())
+              .then(motherboards => {
+                const selectedMotherboard = motherboards.find(motherboard => motherboard.id === parseInt(motherboard));
+                if (selectedMotherboard && selectedCpu.socket === selectedMotherboard.socket) {
+                  buildSummary.innerHTML = `CPU: ${selectedCpu.name}<br>Motherboard: ${selectedMotherboard.name}<br>GPU: ${gpu}<br>RAM: ${ram}<br>Power Supply: ${powerSupply}`;
+                } else {
+                  buildSummary.innerHTML = 'Invalid motherboard selection';
+                }
+              });
+          } else {
+            buildSummary.innerHTML = 'Invalid CPU selection';
+          }
+        });
+    });
+    fetch('/api/cpus')
+      .then(response => response.json())
+      .then(cpus => {
+        cpus.forEach(cpu => {
+          const option = document.createElement('option');
+          option.value = cpu.id;
+          option.textContent = cpu.name;
+          cpuSelect.appendChild(option);
+        });
+      });
+    fetch('/api/motherboards')
+      .then(response => response.json())
+      .then(motherboards => {
+        motherboards.forEach(motherboard => {
+          const option = document.createElement('option');
+          option.value = motherboard.id;
+          option.textContent = motherboard.name;
+          motherboardSelect.appendChild(option);
+        });
+      });
+    fetch('/api/gpus')
+      .then(response => response.json())
+      .then(gpus => {
+        gpus.forEach(gpu => {
+          const option = document.createElement('option');
+          option.value = gpu.id;
+          option.textContent = gpu.name;
+          gpuSelect.appendChild(option);
+        });
+      });
+    fetch('/api/ram')
+      .then(response => response.json())
+      .then(ram => {
+        ram.forEach(ram => {
+          const option = document.createElement('option');
+          option.value = ram.id;
+          option.textContent = ram.name;
+          ramSelect.appendChild(option);
+        });
+      });
+    fetch('/api/power-supplies')
+      .then(response => response.json())
+      .then(powerSupplies => {
+        powerSupplies.forEach(powerSupply => {
+          const option = document.createElement('option');
+          option.value = powerSupply.id;
+          option.textContent = powerSupply.name;
+          powerSupplySelect.appendChild(option);
+        });
+      });
+  </script>
+</body>
+</html>

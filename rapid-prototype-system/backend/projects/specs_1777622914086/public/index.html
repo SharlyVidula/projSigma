@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PC Builder Pro</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-gray-200">
+  <header class="bg-gray-800 py-4">
+    <nav class="container mx-auto flex justify-between">
+      <a href="#" class="text-lg font-bold">PC Builder Pro</a>
+      <button class="bg-gray-700 hover:bg-gray-600 py-2 px-4 rounded">Build Your PC</button>
+    </nav>
+  </header>
+  <main class="container mx-auto p-4 pt-6 md:p-6 lg:p-12 xl:p-24">
+    <h1 class="text-3xl font-bold mb-4">Build Your PC</h1>
+    <form>
+      <div class="mb-4">
+        <label for="cpu" class="block text-gray-200">CPU:</label>
+        <select id="cpu" class="block w-full p-2 pl-10 text-gray-200 bg-gray-700 border border-gray-600 rounded">
+          <option value="">Select CPU</option>
+          <option value="1">Intel Core i9</option>
+          <option value="2">AMD Ryzen 9</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label for="gpu" class="block text-gray-200">GPU:</label>
+        <select id="gpu" class="block w-full p-2 pl-10 text-gray-200 bg-gray-700 border border-gray-600 rounded">
+          <option value="">Select GPU</option>
+          <option value="1">NVIDIA GeForce RTX 3080</option>
+          <option value="2">AMD Radeon RX 6800 XT</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label for="ram" class="block text-gray-200">RAM:</label>
+        <select id="ram" class="block w-full p-2 pl-10 text-gray-200 bg-gray-700 border border-gray-600 rounded">
+          <option value="">Select RAM</option>
+          <option value="1">Corsair Vengeance LPX 16GB</option>
+          <option value="2">G.Skill Trident Z5 16GB</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label for="motherboard" class="block text-gray-200">Motherboard:</label>
+        <select id="motherboard" class="block w-full p-2 pl-10 text-gray-200 bg-gray-700 border border-gray-600 rounded">
+          <option value="">Select Motherboard</option>
+          <option value="1">ASRock Z590 Extreme4</option>
+          <option value="2">MSI B550M BAZOOKA</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label for="powersupply" class="block text-gray-200">Power Supply:</label>
+        <select id="powersupply" class="block w-full p-2 pl-10 text-gray-200 bg-gray-700 border border-gray-600 rounded">
+          <option value="">Select Power Supply</option>
+          <option value="1">EVGA 650 GS, 80+ Gold 650W</option>
+          <option value="2">Corsair RM650, 80+ Gold 650W</option>
+        </select>
+      </div>
+      <button class="bg-gray-700 hover:bg-gray-600 py-2 px-4 rounded" type="button" onclick="calculateWattage()">Calculate Wattage</button>
+      <p id="wattage" class="mt-4"></p>
+    </form>
+  </main>
+  <script>
+    function calculateWattage() {
+      const cpu = document.getElementById('cpu').value;
+      const gpu = document.getElementById('gpu').value;
+      const ram = document.getElementById('ram').value;
+      const motherboard = document.getElementById('motherboard').value;
+      const powersupply = document.getElementById('powersupply').value;
+      
+      // Mock data for demonstration purposes
+      const cpuData = {
+        '1': { powerDraw: 125 },
+        '2': { powerDraw: 105 }
+      };
+      const gpuData = {
+        '1': { powerDraw: 320 },
+        '2': { powerDraw: 260 }
+      };
+      const ramData = {
+        '1': { powerDraw: 10 },
+        '2': { powerDraw: 12 }
+      };
+      
+      const totalWattage = (cpuData[cpu] ? cpuData[cpu].powerDraw : 0) + (gpuData[gpu] ? gpuData[gpu].powerDraw : 0) + (ramData[ram] ? ramData[ram].powerDraw : 0);
+      document.getElementById('wattage').innerText = `Total Wattage: ${totalWattage}W`;
+    }
+  </script>
+</body>
+</html>

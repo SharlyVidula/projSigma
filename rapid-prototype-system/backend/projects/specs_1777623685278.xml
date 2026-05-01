@@ -1,0 +1,161 @@
+<ProjectSpecification>
+    <ProjectName>RecruitHub</ProjectName>
+    <Summary>A modern recruitment platform dashboard for HR managers to manage candidate pipelines and parse resumes using AI technology.</Summary>
+    <UserRoles>
+        <UserRole>
+            <Name>HR Manager</Name>
+            <Description>Responsible for managing candidate pipelines, uploading resumes, and viewing statistical overviews.</Description>
+            <Permissions>
+                <Permission>View Candidate Pipeline</Permission>
+                <Permission>Upload Resumes</Permission>
+                <Permission>View Statistical Overview</Permission>
+                <Permission>Manage Candidate Profiles</Permission>
+            </Permissions>
+        </UserRole>
+        <UserRole>
+            <Name>Admin</Name>
+            <Description>Responsible for configuring the platform, managing user roles, and maintaining system integrity.</Description>
+            <Permissions>
+                <Permission>Configure Platform Settings</Permission>
+                <Permission>Manage User Roles</Permission>
+                <Permission>Maintain System Integrity</Permission>
+            </Permissions>
+        </UserRole>
+    </UserRoles>
+    <FunctionalRequirements>
+        <FunctionalRequirement>
+            <Name>Candidate Pipeline Management</Name>
+            <Description>Allow HR managers to manage candidate pipelines using a Kanban board with columns for 'Applied', 'Interviewing', and 'Hired'.</Description>
+            <Features>
+                <Feature>Drag-and-drop functionality to move candidates between columns</Feature>
+                <Feature>Real-time updates to reflect changes in candidate status</Feature>
+            </Features>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <Name>AI Resume Parser</Name>
+            <Description>Allow HR managers to upload resumes and automatically populate candidate profile cards with skills, experience, and education.</Description>
+            <Features>
+                <Feature>File upload button for resumes</Feature>
+                <Feature>AI-powered parsing of resume data</Feature>
+                <Feature>Automatic population of candidate profile cards</Feature>
+            </Features>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <Name>Statistical Overview</Name>
+            <Description>Display a statistical overview section at the top of the dashboard showing total applications and hiring rates.</Description>
+            <Features>
+                <Feature>Real-time updates to reflect changes in application and hiring data</Feature>
+                <Feature>Visual representation of data using charts or graphs</Feature>
+            </Features>
+        </FunctionalRequirement>
+    </FunctionalRequirements>
+    <UIStructure>
+        <Page>
+            <Name>Dashboard</Name>
+            <Components>
+                <Component>
+                    <Name>Statistical Overview Section</Name>
+                    <Description>Displays total applications and hiring rates.</Description>
+                </Component>
+                <Component>
+                    <Name>Candidate Pipeline Kanban Board</Name>
+                    <Description>Allows HR managers to manage candidate pipelines.</Description>
+                </Component>
+                <Component>
+                    <Name>Resume Upload Section</Name>
+                    <Description>Allows HR managers to upload resumes and parse candidate data.</Description>
+                </Component>
+                <Component>
+                    <Name>Sidebar Navigation Menu</Name>
+                    <Description>Provides navigation to different sections of the platform.</Description>
+                </Component>
+            </Components>
+        </Page>
+        <Page>
+            <Name>Candidate Profile</Name>
+            <Components>
+                <Component>
+                    <Name>Candidate Profile Card</Name>
+                    <Description>Displays candidate skills, experience, and education.</Description>
+                </Component>
+            </Components>
+        </Page>
+    </UIStructure>
+    <DatabaseSchema>
+        <Entity>
+            <Name>Candidates</Name>
+            <Attributes>
+                <Attribute>
+                    <Name>ID</Name>
+                    <Type>Integer</Type>
+                    <Description>Unique identifier for each candidate.</Description>
+                </Attribute>
+                <Attribute>
+                    <Name>Name</Name>
+                    <Type>String</Type>
+                    <Description>Candidate name.</Description>
+                </Attribute>
+                <Attribute>
+                    <Name>Skills</Name>
+                    <Type>String</Type>
+                    <Description>Candidate skills.</Description>
+                </Attribute>
+                <Attribute>
+                    <Name>Experience</Name>
+                    <Type>String</Type>
+                    <Description>Candidate experience.</Description>
+                </Attribute>
+                <Attribute>
+                    <Name>Education</Name>
+                    <Type>String</Type>
+                    <Description>Candidate education.</Description>
+                </Attribute>
+                <Attribute>
+                    <Name>Status</Name>
+                    <Type>String</Type>
+                    <Description>Candidate status (Applied, Interviewing, Hired).</Description>
+                </Attribute>
+            </Attributes>
+        </Entity>
+        <Entity>
+            <Name>Resumes</Name>
+            <Attributes>
+                <Attribute>
+                    <Name>ID</Name>
+                    <Type>Integer</Type>
+                    <Description>Unique identifier for each resume.</Description>
+                </Attribute>
+                <Attribute>
+                    <Name>CandidateID</Name>
+                    <Type>Integer</Type>
+                    <Description>Foreign key referencing the Candidates entity.</Description>
+                </Attribute>
+                <Attribute>
+                    <Name>File</Name>
+                    <Type>Blob</Type>
+                    <Description>Resume file.</Description>
+                </Attribute>
+            </Attributes>
+        </Entity>
+        <Entity>
+            <Name>Applications</Name>
+            <Attributes>
+                <Attribute>
+                    <Name>ID</Name>
+                    <Type>Integer</Type>
+                    <Description>Unique identifier for each application.</Description>
+                </Attribute>
+                <Attribute>
+                    <Name>CandidateID</Name>
+                    <Type>Integer</Type>
+                    <Description>Foreign key referencing the Candidates entity.</Description>
+                </Attribute>
+                <Attribute>
+                    <Name>Date</Name>
+                    <Type>Date</Type>
+                    <Description>Application date.</Description>
+                </Attribute>
+            </Attributes>
+        </Entity>
+    </DatabaseSchema>
+</ProjectSpecification>

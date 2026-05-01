@@ -1,0 +1,142 @@
+<ProjectSpecification>
+    <ProjectName>SciCalc</ProjectName>
+    <Summary>A comprehensive scientific calculator application that performs advanced mathematical operations, including trigonometry, logarithms, and statistical functions.</Summary>
+    <UserRoles>
+        <UserRole>
+            <RoleName>Admin</RoleName>
+            <Description>Responsible for managing application settings and updating calculator formulas.</Description>
+            <Permissions>Manage settings, update formulas, view usage statistics</Permissions>
+        </UserRole>
+        <UserRole>
+            <RoleName>User</RoleName>
+            <Description>Utilizes the calculator for scientific and mathematical computations.</Description>
+            <Permissions>Perform calculations, view history, customize display settings</Permissions>
+        </UserRole>
+    </UserRoles>
+    <FunctionalRequirements>
+        <FunctionalRequirement>
+            <RequirementName>Basic Arithmetic Operations</RequirementName>
+            <Description>Perform addition, subtraction, multiplication, and division.</Description>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Trigonometric Functions</RequirementName>
+            <Description>Calculate sine, cosine, and tangent of angles in degrees, radians, or gradians.</Description>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Logarithmic Functions</RequirementName>
+            <Description>Compute natural logarithm, base-10 logarithm, and logarithm to a specified base.</Description>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Statistical Functions</RequirementName>
+            <Description>Calculate mean, median, mode, standard deviation, and variance.</Description>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Exponential and Power Functions</RequirementName>
+            <Description>Evaluate exponential functions, powers, and roots.</Description>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>History and Memory Management</RequirementName>
+            <Description>Store and recall previous calculations, with options to clear history and memory.</Description>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Unit Conversions</RequirementName>
+            <Description>Convert between various units of measurement, such as length, area, volume, and temperature.</Description>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Customizable Display</RequirementName>
+            <Description>Allow users to customize the display settings, including font size, color scheme, and notation style.</Description>
+        </FunctionalRequirement>
+    </FunctionalRequirements>
+    <UIStructure>
+        <Page>
+            <PageName>Calculator</PageName>
+            <Components>
+                <Component>
+                    <ComponentName>Keypad</ComponentName>
+                    <Description>Standard numerical keypad with additional buttons for scientific functions.</Description>
+                </Component>
+                <Component>
+                    <ComponentName>Display Screen</ComponentName>
+                    <Description>Shows the current calculation and result.</Description>
+                </Component>
+                <Component>
+                    <ComponentName>Menu Bar</ComponentName>
+                    <Description>Provides access to settings, history, and unit conversions.</Description>
+                </Component>
+            </Components>
+        </Page>
+        <Page>
+            <PageName>History</PageName>
+            <Components>
+                <Component>
+                    <ComponentName>Calculation List</ComponentName>
+                    <Description>Displays a list of previous calculations.</Description>
+                </Component>
+                <Component>
+                    <ComponentName>Clear History Button</ComponentName>
+                    <Description>Removes all previous calculations from the history.</Description>
+                </Component>
+            </Components>
+        </Page>
+        <Page>
+            <PageName>Settings</PageName>
+            <Components>
+                <Component>
+                    <ComponentName>Display Settings</ComponentName>
+                    <Description>Allows users to customize font size, color scheme, and notation style.</Description>
+                </Component>
+                <Component>
+                    <ComponentName>Unit Conversion Settings</ComponentName>
+                    <Description>Enables users to select preferred units for conversions.</Description>
+                </Component>
+            </Components>
+        </Page>
+    </UIStructure>
+    <DatabaseSchema>
+        <Entity>
+            <EntityName>Calculations</EntityName>
+            <Attributes>
+                <Attribute>
+                    <AttributeName>CalculationID</AttributeName>
+                    <DataType>Integer</DataType>
+                    <Description>Unique identifier for each calculation.</Description>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>Expression</AttributeName>
+                    <DataType>String</DataType>
+                    <Description>The mathematical expression entered by the user.</Description>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>Result</AttributeName>
+                    <DataType>Double</DataType>
+                    <Description>The result of the calculation.</Description>
+                </Attribute>
+                <Attribute>
+                    <AttributeType>Timestamp</AttributeType>
+                    <DataType>DateTime</DataType>
+                    <Description>The date and time the calculation was performed.</Description>
+                </Attribute>
+            </Attributes>
+        </Entity>
+        <Entity>
+            <EntityName>Settings</EntityName>
+            <Attributes>
+                <Attribute>
+                    <AttributeName>UserID</AttributeName>
+                    <DataType>Integer</DataType>
+                    <Description>Foreign key referencing the user who saved the settings.</Description>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>DisplaySettings</AttributeName>
+                    <DataType>String</DataType>
+                    <Description>Serialized display settings, including font size, color scheme, and notation style.</Description>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>UnitConversions</AttributeName>
+                    <DataType>String</DataType>
+                    <Description>Serialized unit conversion preferences.</Description>
+                </Attribute>
+            </Attributes>
+        </Entity>
+    </DatabaseSchema>
+</ProjectSpecification>

@@ -1,0 +1,140 @@
+<ProjectSpecification>
+    <ProjectName>RecruitHub</ProjectName>
+    <Summary>A modern recruitment platform dashboard for HR managers to manage candidate pipelines and parse resumes using AI.</Summary>
+    <UserRoles>
+        <UserRole>
+            <RoleName>HR Manager</RoleName>
+            <RoleDescription>Responsible for managing candidate pipelines, uploading resumes, and viewing statistical overviews.</RoleDescription>
+        </UserRole>
+        <UserRole>
+            <RoleName>Admin</RoleName>
+            <RoleDescription>Responsible for configuring system settings, managing user accounts, and monitoring system performance.</RoleDescription>
+        </UserRole>
+    </UserRoles>
+    <FunctionalRequirements>
+        <FunctionalRequirement>
+            <RequirementName>Candidate Pipeline Management</RequirementName>
+            <RequirementDescription>Allow HR managers to manage candidate pipelines using a Kanban board with columns for Applied, Interviewing, and Hired.</RequirementDescription>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>AI Resume Parser</RequirementName>
+            <RequirementDescription>Allow HR managers to upload resumes and automatically populate candidate profile cards with skills, experience, and education using AI parsing.</RequirementDescription>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Statistical Overview</RequirementName>
+            <RequirementDescription>Display total applications and hiring rates in a statistical overview section at the top of the dashboard.</RequirementDescription>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>File Upload</RequirementName>
+            <RequirementDescription>Allow HR managers to upload resumes in various file formats (e.g., PDF, DOCX, TXT).</RequirementDescription>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Drag-and-Drop Kanban Board</RequirementName>
+            <RequirementDescription>Enable HR managers to drag and drop candidates between columns on the Kanban board.</RequirementDescription>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Search and Filter</RequirementName>
+            <RequirementDescription>Allow HR managers to search and filter candidates by name, skills, experience, and education.</RequirementDescription>
+        </FunctionalRequirement>
+    </FunctionalRequirements>
+    <UIStructure>
+        <Page>
+            <PageName>Dashboard</PageName>
+            <PageDescription>The main dashboard page with a statistical overview section, Kanban board, and sidebar navigation menu.</PageDescription>
+            <Component>
+                <ComponentName>Statistical Overview</ComponentName>
+                <ComponentDescription>A section displaying total applications and hiring rates.</ComponentDescription>
+            </Component>
+            <Component>
+                <ComponentName>Kanban Board</ComponentName>
+                <ComponentDescription>A Kanban board with columns for Applied, Interviewing, and Hired.</ComponentDescription>
+            </Component>
+            <Component>
+                <ComponentName>Sidebar Navigation Menu</ComponentName>
+                <ComponentDescription>A menu with links to different sections of the platform (e.g., Candidates, Jobs, Settings).</ComponentDescription>
+            </Component>
+        </Page>
+        <Page>
+            <PageName>Candidate Profile</PageName>
+            <PageDescription>A page displaying a candidate's profile information, including skills, experience, and education.</PageDescription>
+            <Component>
+                <ComponentName>Candidate Profile Card</ComponentName>
+                <ComponentDescription>A card displaying a candidate's profile information.</ComponentDescription>
+            </Component>
+        </Page>
+        <Page>
+            <PageName>AI Resume Parser</PageName>
+            <PageDescription>A page with a file upload button for uploading resumes and parsing candidate information using AI.</PageDescription>
+            <Component>
+                <ComponentName>File Upload Button</ComponentName>
+                <ComponentDescription>A button allowing HR managers to upload resumes.</ComponentDescription>
+            </Component>
+        </Page>
+    </UIStructure>
+    <DatabaseSchema>
+        <Entity>
+            <EntityName>Candidates</EntityName>
+            <EntityDescription>A table storing candidate information, including name, skills, experience, and education.</EntityDescription>
+            <Attribute>
+                <AttributeName>CandidateID</AttributeName>
+                <AttributeType>Integer</AttributeType>
+            </Attribute>
+            <Attribute>
+                <AttributeName>Name</AttributeName>
+                <AttributeType>String</AttributeType>
+            </Attribute>
+            <Attribute>
+                <AttributeName>Skills</AttributeName>
+                <AttributeType>String</AttributeType>
+            </Attribute>
+            <Attribute>
+                <AttributeName>Experience</AttributeName>
+                <AttributeType>String</AttributeType>
+            </Attribute>
+            <Attribute>
+                <AttributeName>Education</AttributeName>
+                <AttributeType>String</AttributeType>
+            </Attribute>
+        </Entity>
+        <Entity>
+            <EntityName>Jobs</EntityName>
+            <EntityDescription>A table storing job information, including job title, description, and requirements.</EntityDescription>
+            <Attribute>
+                <AttributeName>JobID</AttributeName>
+                <AttributeType>Integer</AttributeType>
+            </Attribute>
+            <Attribute>
+                <AttributeName>JobTitle</AttributeName>
+                <AttributeType>String</AttributeType>
+            </Attribute>
+            <Attribute>
+                <AttributeName>JobDescription</AttributeName>
+                <AttributeType>String</AttributeType>
+            </Attribute>
+            <Attribute>
+                <AttributeName>Requirements</AttributeName>
+                <AttributeType>String</AttributeType>
+            </Attribute>
+        </Entity>
+        <Entity>
+            <EntityName>CandidatePipeline</EntityName>
+            <EntityDescription>A table storing candidate pipeline information, including candidate ID, job ID, and pipeline stage.</EntityDescription>
+            <Attribute>
+                <AttributeName>CandidatePipelineID</AttributeName>
+                <AttributeType>Integer</AttributeType>
+            </Attribute>
+            <Attribute>
+                <AttributeName>CandidateID</AttributeName>
+                <AttributeType>Integer</AttributeType>
+            </Attribute>
+            <Attribute>
+                <AttributeName>JobID</AttributeName>
+                <AttributeType>Integer</AttributeType>
+            </Attribute>
+            <Attribute>
+                <AttributeName>PipelineStage</AttributeName>
+                <AttributeType>String</AttributeType>
+            </Attribute>
+        </Entity>
+    </DatabaseSchema>
+</ProjectSpecification>

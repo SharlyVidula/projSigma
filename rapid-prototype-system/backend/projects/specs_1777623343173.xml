@@ -1,0 +1,149 @@
+<ProjectSpecification>
+    <ProjectName>RecruitHub</ProjectName>
+    <Summary>A modern recruitment platform dashboard for HR managers to manage candidate pipelines and utilize AI-powered resume parsing for efficient hiring processes.</Summary>
+    <UserRoles>
+        <UserRole>
+            <RoleName>HR Manager</RoleName>
+            <RoleDescription>Responsible for managing candidate pipelines, uploading resumes, and viewing statistical overviews.</RoleDescription>
+        </UserRole>
+        <UserRole>
+            <RoleName>Admin</RoleName>
+            <RoleDescription>Responsible for configuring system settings, managing user accounts, and monitoring overall platform performance.</RoleDescription>
+        </UserRole>
+    </UserRoles>
+    <FunctionalRequirements>
+        <FunctionalRequirement>
+            <RequirementName>Candidate Pipeline Management</RequirementName>
+            <RequirementDescription>Implement a Kanban board for managing candidate pipelines with columns for 'Applied', 'Interviewing', and 'Hired' statuses, allowing for drag-and-drop functionality.</RequirementDescription>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>AI Resume Parser</RequirementName>
+            <RequirementDescription>Develop an AI-powered resume parser module that automatically populates candidate profile cards with skills, experience, and education upon resume upload.</RequirementDescription>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Statistical Overview</RequirementName>
+            <RequirementDescription>Display a statistical overview section at the top of the dashboard, showing total applications and hiring rates.</RequirementDescription>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>File Upload</RequirementName>
+            <RequirementDescription>Implement a file upload button for resumes, supporting various file formats (e.g., PDF, DOCX, TXT).</RequirementDescription>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Search and Filter</RequirementName>
+            <RequirementDescription>Provide search and filter functionality for candidate profiles, allowing HR managers to quickly find specific candidates.</RequirementDescription>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>User Account Management</RequirementName>
+            <RequirementDescription>Implement user account management features, including registration, login, and password recovery.</RequirementDescription>
+        </FunctionalRequirement>
+    </FunctionalRequirements>
+    <UIStructure>
+        <Page>
+            <PageName>Dashboard</PageName>
+            <PageDescription>The main dashboard page, featuring the candidate pipeline Kanban board, statistical overview, and sidebar navigation menu.</PageDescription>
+            <Component>
+                <ComponentName>Sidebar Navigation Menu</ComponentName>
+                <ComponentDescription>A responsive sidebar menu with links to key features, such as candidate pipeline, resume parser, and user account management.</ComponentDescription>
+            </Component>
+            <Component>
+                <ComponentName>Statistical Overview Section</ComponentName>
+                <ComponentDescription>A section displaying key statistics, including total applications and hiring rates.</ComponentDescription>
+            </Component>
+            <Component>
+                <ComponentName>Candidate Pipeline Kanban Board</ComponentName>
+                <ComponentDescription>A Kanban board with columns for 'Applied', 'Interviewing', and 'Hired' statuses, allowing for drag-and-drop functionality.</ComponentDescription>
+            </Component>
+        </Page>
+        <Page>
+            <PageName>Resume Parser</PageName>
+            <PageDescription>A dedicated page for uploading resumes and viewing parsed candidate profiles.</PageDescription>
+            <Component>
+                <ComponentName>File Upload Button</ComponentName>
+                <ComponentDescription>A button for uploading resumes, supporting various file formats.</ComponentDescription>
+            </Component>
+            <Component>
+                <ComponentName>Candidate Profile Card</ComponentName>
+                <ComponentDescription>A card displaying the parsed candidate's skills, experience, and education.</ComponentDescription>
+            </Component>
+        </Page>
+    </UIStructure>
+    <DatabaseSchema>
+        <Entity>
+            <EntityName>Candidates</EntityName>
+            <EntityDescription>Stores information about candidates, including their profiles, skills, experience, and education.</EntityDescription>
+            <Attribute>
+                <AttributeName>CandidateID</AttributeName>
+                <AttributeType>Integer</AttributeType>
+                <AttributeDescription>Unique identifier for each candidate.</AttributeDescription>
+            </Attribute>
+            <Attribute>
+                <AttributeName>Name</AttributeName>
+                <AttributeType>String</AttributeType>
+                <AttributeDescription>Candidate's full name.</AttributeDescription>
+            </Attribute>
+            <Attribute>
+                <AttributeName>Skills</AttributeName>
+                <AttributeType>String</AttributeType>
+                <AttributeDescription>Candidate's skills and qualifications.</AttributeDescription>
+            </Attribute>
+            <Attribute>
+                <AttributeName>Experience</AttributeName>
+                <AttributeType>String</AttributeType>
+                <AttributeDescription>Candidate's work experience.</AttributeDescription>
+            </Attribute>
+            <Attribute>
+                <AttributeName>Education</AttributeName>
+                <AttributeType>String</AttributeType>
+                <AttributeDescription>Candidate's educational background.</AttributeDescription>
+            </Attribute>
+            <Attribute>
+                <AttributeName>Status</AttributeName>
+                <AttributeType>String</AttributeType>
+                <AttributeDescription>Candidate's current status (e.g., 'Applied', 'Interviewing', 'Hired').</AttributeDescription>
+            </Attribute>
+        </Entity>
+        <Entity>
+            <EntityName>Resumes</EntityName>
+            <EntityDescription>Stores uploaded resumes and their corresponding parsed candidate profiles.</EntityDescription>
+            <Attribute>
+                <AttributeName>ResumeID</AttributeName>
+                <AttributeType>Integer</AttributeType>
+                <AttributeDescription>Unique identifier for each uploaded resume.</AttributeDescription>
+            </Attribute>
+            <Attribute>
+                <AttributeName>CandidateID</AttributeName>
+                <AttributeType>Integer</AttributeType>
+                <AttributeDescription>Foreign key referencing the Candidates entity.</AttributeDescription>
+            </Attribute>
+            <Attribute>
+                <AttributeName>ResumeFile</AttributeName>
+                <AttributeType>Blob</AttributeType>
+                <AttributeDescription>The uploaded resume file.</AttributeDescription>
+            </Attribute>
+        </Entity>
+        <Entity>
+            <EntityName>Users</EntityName>
+            <EntityDescription>Stores information about registered users, including HR managers and admins.</EntityDescription>
+            <Attribute>
+                <AttributeName>UserID</AttributeName>
+                <AttributeType>Integer</AttributeType>
+                <AttributeDescription>Unique identifier for each user.</AttributeDescription>
+            </Attribute>
+            <Attribute>
+                <AttributeName>Username</AttributeName>
+                <AttributeType>String</AttributeType>
+                <AttributeDescription>User's chosen username.</AttributeDescription>
+            </Attribute>
+            <Attribute>
+                <AttributeName>Password</AttributeName>
+                <AttributeType>String</AttributeType>
+                <AttributeDescription>User's password (hashed for security).</AttributeDescription>
+            </Attribute>
+            <Attribute>
+                <AttributeName>Role</AttributeName>
+                <AttributeType>String</AttributeType>
+                <AttributeDescription>User's role (e.g., 'HR Manager', 'Admin').</AttributeDescription>
+            </Attribute>
+        </Entity>
+    </DatabaseSchema>
+</ProjectSpecification>
