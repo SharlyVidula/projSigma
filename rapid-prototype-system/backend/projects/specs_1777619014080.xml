@@ -1,0 +1,143 @@
+<ProjectSpecification>
+    <ProjectName>HospitalManagementSystem</ProjectName>
+    <Summary>A web-based application for managing hospital operations, including user management, appointment scheduling, and patient data management.</Summary>
+    <UserRoles>
+        <UserRole>
+            <RoleName>Admin</RoleName>
+            <RoleDescription>Responsible for managing system settings, user accounts, and overall system administration.</RoleDescription>
+            <Permissions>Manage users, manage system settings, view reports</Permissions>
+        </UserRole>
+        <UserRole>
+            <RoleName>Doctor</RoleName>
+            <RoleDescription>Responsible for managing patient appointments, viewing patient data, and updating patient records.</RoleDescription>
+            <Permissions>Schedule appointments, view patient data, update patient records</Permissions>
+        </UserRole>
+        <UserRole>
+            <RoleName>Patient</RoleName>
+            <RoleDescription>Responsible for viewing their own appointment schedules and medical records.</RoleDescription>
+            <Permissions>View appointment schedule, view medical records</Permissions>
+        </UserRole>
+    </UserRoles>
+    <FunctionalRequirements>
+        <FunctionalRequirement>
+            <RequirementName>User Registration</RequirementName>
+            <RequirementDescription>Allow users to register for an account with their role (Admin, Doctor, Patient).</RequirementDescription>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Appointment Scheduling</RequirementName>
+            <RequirementDescription>Allow doctors to schedule appointments with patients.</RequirementDescription>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Patient Data Management</RequirementName>
+            <RequirementDescription>Allow doctors to view and update patient medical records.</RequirementDescription>
+        </FunctionalRequirement>
+        <FunctionalRequirement>
+            <RequirementName>Appointment Reminders</RequirementName>
+            <RequirementDescription>Send reminders to patients about upcoming appointments.</RequirementDescription>
+        </FunctionalRequirement>
+    </FunctionalRequirements>
+    <UIStructure>
+        <Page>
+            <PageName>Login Page</PageName>
+            <PageDescription>Allow users to log in to the system.</PageDescription>
+        </Page>
+        <Page>
+            <PageName>Dashboard</PageName>
+            <PageDescription>Display a dashboard with relevant information for each user role.</PageDescription>
+        </Page>
+        <Page>
+            <PageName>Appointment Schedule</PageName>
+            <PageDescription>Allow doctors to view and manage their appointment schedules.</PageDescription>
+        </Page>
+        <Page>
+            <PageName>Patient Records</PageName>
+            <PageDescription>Allow doctors to view and update patient medical records.</PageDescription>
+        </Page>
+    </UIStructure>
+    <DatabaseSchema>
+        <Entity>
+            <EntityName>Users</EntityName>
+            <EntityDescription>Store information about all users in the system.</EntityDescription>
+            <Attributes>
+                <Attribute>
+                    <AttributeName>UserID</AttributeName>
+                    <AttributeType>Integer</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>Username</AttributeName>
+                    <AttributeType>String</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>Password</AttributeName>
+                    <AttributeType>String</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>Role</AttributeName>
+                    <AttributeType>String</AttributeType>
+                </Attribute>
+            </Attributes>
+        </Entity>
+        <Entity>
+            <EntityName>Doctors</EntityName>
+            <EntityDescription>Store information about doctors in the system.</EntityDescription>
+            <Attributes>
+                <Attribute>
+                    <AttributeName>DoctorID</AttributeName>
+                    <AttributeType>Integer</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>UserID</AttributeName>
+                    <AttributeType>Integer</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>Specialty</AttributeName>
+                    <AttributeType>String</AttributeType>
+                </Attribute>
+            </Attributes>
+        </Entity>
+        <Entity>
+            <EntityName>Patients</EntityName>
+            <EntityDescription>Store information about patients in the system.</EntityDescription>
+            <Attributes>
+                <Attribute>
+                    <AttributeName>PatientID</AttributeName>
+                    <AttributeType>Integer</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>UserID</AttributeName>
+                    <AttributeType>Integer</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>MedicalHistory</AttributeName>
+                    <AttributeType>String</AttributeType>
+                </Attribute>
+            </Attributes>
+        </Entity>
+        <Entity>
+            <EntityName>Appointments</EntityName>
+            <EntityDescription>Store information about appointments in the system.</EntityDescription>
+            <Attributes>
+                <Attribute>
+                    <AttributeName>AppointmentID</AttributeName>
+                    <AttributeType>Integer</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>DoctorID</AttributeName>
+                    <AttributeType>Integer</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>PatientID</AttributeName>
+                    <AttributeType>Integer</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>AppointmentDate</AttributeName>
+                    <AttributeType>Date</AttributeType>
+                </Attribute>
+                <Attribute>
+                    <AttributeName>AppointmentTime</AttributeName>
+                    <AttributeType>Time</AttributeType>
+                </Attribute>
+            </Attributes>
+        </Entity>
+    </DatabaseSchema>
+</ProjectSpecification>
