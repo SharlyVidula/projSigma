@@ -1,3 +1,4 @@
+import { exec } from 'child_process';
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -82,7 +83,59 @@ app.post('/api/generate-xml', async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+// Level 2: The Execution Engine (Antigravity Simulator)
+app.post('/api/build-prototype', async (req, res) => {
+    try {
+        const { fileName } = req.body;
 
+        if (!fileName) {
+            return res.status(400).json({ error: "No XML file specified." });
+        }
+
+        console.log(`Starting Antigravity build process for ${fileName}...`);
+
+        // Define where the new prototype will be built
+        const prototypeDir = path.resolve('projects', 'generated_prototype');
+
+        // 1. Create the folder if it doesn't exist
+        await fs.mkdir(prototypeDir, { recursive: true });
+
+        // 2. Here is where the "Antigravity Agent" would read the XML and write the code.
+        // For now, let's have it write a simple index.html to prove it works
+        const htmlContent = `
+            <!DOCTYPE html>
+            <html>
+            <head><title>Generated Prototype</title></head>
+            <body style="font-family: sans-serif; padding: 50px;">
+                <h1>🚀 Your Prototype is Live!</h1>
+                <p>This was generated based on the XML file: ${fileName}</p>
+                <p>Next step: Make the agent parse the XML and write MERN stack code here.</p>
+            </body>
+            </html>
+        `;
+
+        await fs.writeFile(path.join(prototypeDir, 'index.html'), htmlContent, 'utf8');
+
+        // 3. Spin up a lightweight server on port 3001 to serve this prototype
+        // We use 'npx serve' which is a fast way to serve static files
+        console.log("Booting up the prototype on port 3001...");
+
+        const buildProcess = exec('npx serve -p 3001', { cwd: prototypeDir });
+
+        buildProcess.stdout.on('data', (data) => console.log(`Prototype Log: ${data}`));
+        buildProcess.stderr.on('data', (data) => console.error(`Prototype Error: ${data}`));
+
+        // Tell the frontend that it's ready!
+        res.status(200).json({
+            message: "Prototype built and running!",
+            url: "http://localhost:3001"
+        });
+
+    } catch (error) {
+        console.error("Error during prototype build:", error);
+        res.status(500).json({ error: "Failed to build prototype." });
+    }
+});
 app.listen(port, () => {
     console.log(`Rapid Prototype Backend running on http://localhost:${port}`);
 });
